@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>AAVisor Molecular JSmol</title>
+  <title>PPVisor Molecular JSmol</title>
   <script type="text/javascript" src="https://chemapps.stolaf.edu/jmol/jsmol/JSmol.min.js"></script>
   <style>
     body { font-family: Arial, sans-serif; margin: 20px; }
@@ -11,7 +11,7 @@
   </style>
 </head>
 <body>
-  <h2>Visor Molecular JSmol</h2>
+  <h2>PPVisor Molecular JSmol</h2>
   <label for="moleculeSelect">Selecciona una molécula:</label>
   <select id="moleculeSelect" onchange="loadMolecule()">
     <option value="">-- Selecciona --</option>
@@ -29,10 +29,11 @@
       debug: false,
       color: "0xFFFFFF",
       addSelectionOptions: false,
-      use: "HTML5",
+      use: "HTML5", // Asegura que se use solo HTML5
       j2sPath: "https://chemapps.stolaf.edu/jmol/jsmol/j2s",
       script: "background white;",
-      readyFunction: null
+      disableJ2SLoadMonitor: true,
+      disableInitialConsole: true
     };
 
     var jmolApplet;
@@ -40,7 +41,7 @@
     function loadMolecule() {
       var url = document.getElementById("moleculeSelect").value;
       if (url) {
-        Jmol.script(jmolApplet, "load " + url);
+        Jmol.script(jmolApplet, "load \"" + url + "\";");
       }
     }
 
