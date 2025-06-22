@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -92,12 +91,11 @@
       script: `load ${baseURL}caffeine.mol; wireframe off; spacefill 23%; spin on;`,
       debug: false,
       addSelectionOptions: false,
-      serverURL: "https://chemapps.stolaf.edu/jmol/jsmol/php/jsmol.php",
       disableJ2SLoadMonitor: true,
       disableInitialConsole: true,
-      readyFunction: null,
-      src: null,
-      jmolApp: true
+      readyFunction: function(applet) {
+        document.getElementById("jsmol-container").innerHTML = Jmol.getAppletHtml(applet);
+      }
     };
 
     const jmolApplet = Jmol.getApplet("jsmol", Info);
