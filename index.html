@@ -2,29 +2,45 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Molécula: Cafeína</title>
+  <title>Interactive Molecules</title>
   <script type="text/javascript" src="https://chemapps.stolaf.edu/jmol/jsmol/JSmol.min.js"></script>
 </head>
 <body>
-  <h2>Molécula interactiva: Cafeína</h2>
-  <div id="jsmol-container" style="width: 400px; height: 400px;"></div>
+  <h2>JSmol Molecule Viewer</h2>
 
-  <script type="text/javascript">
-    var Info = {
+  <!-- Dropdown menu to select different molecular files -->
+  <label for="molSelector">Select a molecule:</label>
+  <select id="molSelector">
+    <option value="caffeine.mol">Caffeine</option>
+    <option value="WIKZUL_VESTA_H1-4-7_phase1.cif">WIKZUL_VESTA_H1-4-7_phase1</option>
+    <option value="WIKZUL01.cif">Molecule WIKZUL01</option>
+  </select>
+  
+  <!-- Container where JSmol will render the molecule -->
+  <div id="jsmol-container" style="width: 400px; height: 400px; margin-top: 20px;"></div>
+
+ <script type="text/javascript">
+    // Base URL pointing to GitHub Pages where the molecular files are hosted
+    const baseURL = "https://jrdcasa.github.io/molecules/";
+
+    // Configuration for the JSmol applet
+    const Info = {
       width: 400,
       height: 400,
       use: "HTML5",
       j2sPath: "https://chemapps.stolaf.edu/jmol/jsmol/j2s",
-      script: `
-        load caffeine.mol;
-        wireframe off;
-        spacefill 20%;
-        spin on;
-      `,
+      script: `load ${baseURL}caffeine.mol; wireframe off; spacefill 20%; spin on;`,
       debug: false
     };
-    Jmol.getApplet("jsmol", Info);
+      // Initialize the JSmol applet
+    const jmolApplet = Jmol.getApplet("jsmol", Info);
+
+    // Event listener: when user selects a new molecule, load it in the viewer
+    document.getElementById("molSelector").addEventListener("change", function() {
+      const selectedFile = this.value;
+      const loadScript = `load ${baseURL}${selectedFile}; wireframe off; spacefill 20%; spin on;`;
+      Jmol.script(jmolApplet, loadScript);
+    });
   </script>
 </body>
 </html>
-
