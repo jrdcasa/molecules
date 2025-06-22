@@ -44,3 +44,96 @@
   </script>
 </body>
 </html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interactive Molecules</title>
+  <script src="https://chemapps.stolaf.edu/jmol/jsmol/JSmol.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f2f2f2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px;
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    #molSelector {
+      padding: 10px 15px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-bottom: 25px;
+      box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    }
+
+    #jsmol-container {
+      width: 400px;
+      height: 400px;
+      border: 2px solid #ddd;
+      border-radius: 12px;
+      background-color: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 14px;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <h2>🧪 Interactive Molecule Viewer</h2>
+
+  <label for="molSelector">Choose a molecule:</label>
+  <select id="molSelector">
+    <option value="caffeine.mol">Caffeine</option>
+    <option value="WIKZUL_VESTA_H1-4-7_phase1.cif">WIKZUL_VESTA_H1-4-7_phase1</option>
+    <option value="WIKZUL01.cif">Molecule WIKZUL01</option>
+  </select>
+
+  
+  <div id="jsmol-container"></div>
+
+  <footer>
+    Created with ❤️ using JSmol and GitHub Pages
+  </footer>
+
+  <script>
+    const baseURL = "https://jrdcasa.github.io/molecules/";
+
+    const Info = {
+      width: 400,
+      height: 400,
+      use: "HTML5",
+      j2sPath: "https://chemapps.stolaf.edu/jmol/jsmol/j2s",
+      script: `load ${baseURL}caffeine.mol; wireframe off; spacefill 20%; spin on;`,
+      debug: false
+    };
+
+    const jmolApplet = Jmol.getApplet("jsmol", Info);
+
+    document.getElementById("molSelector").addEventListener("change", function () {
+      const selectedFile = this.value;
+      const loadScript = `load ${baseURL}${selectedFile}; wireframe off; spacefill 20%; spin on;`;
+      Jmol.script(jmolApplet, loadScript);
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
