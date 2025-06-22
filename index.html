@@ -19,13 +19,8 @@
       margin-bottom: 20px;
     }
 
-    #molSelector {
-      padding: 10px 15px;
-      font-size: 16px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      margin-bottom: 25px;
-      box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    #controls {
+      margin-bottom: 20px;
     }
 
     #jsmol-container {
@@ -43,19 +38,42 @@
       font-size: 14px;
       color: #777;
     }
+
+    select, button {
+      margin: 5px;
+      padding: 8px;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
   <h2>🧪 Interactive Molecule Viewer</h2>
 
-  <label for="molSelector">Choose a molecule:</label>
-  <select id="molSelector">
-    <option value="caffeine.mol">Caffeine</option>
-    <option value="WIKZUL_VESTA_H1-4-7_phase1.cif">WIKZUL_VESTA_H1-4-7_phase1</option>
-    <option value="WIKZUL01.cif">Molecule WIKZUL01</option>
-  </select>
+  <div id="controls">
+    <label for="molSelector">Choose a molecule:</label>
+    <select id="molSelector">
+      <option value="caffeine.mol">Caffeine</option>
+      <option value="WIKZUL_VESTA_H1-4-7_phase1.cif">WIKZUL_VESTA_H1-4-7_phase1</option>
+      <option value="WIKZUL01.cif">Molecule WIKZUL01</option>
+    </select>
 
-  
+    <button onclick="Jmol.script(jmolApplet, 'spacefill off')">Atoms Off</button>
+    <button onclick="Jmol.script(jmolApplet, 'spacefill 23%')">Atoms 23%</button>
+    <button onclick="Jmol.script(jmolApplet, 'spacefill 100%')">Atoms 100%</button>
+
+    <button onclick="Jmol.script(jmolApplet, 'spin on')">Spin On</button>
+    <button onclick="Jmol.script(jmolApplet, 'spin off')">Spin Off</button>
+
+    <select onchange="Jmol.script(jmolApplet, this.value)">
+      <option value="background white">White</option>
+      <option value="background skyblue" selected>Sky Blue</option>
+      <option value="background yellow">Yellow</option>
+      <option value="background salmon">Salmon</option>
+      <option value="background palegreen">Pale Green</option>
+      <option value="background black">Black</option>
+    </select>
+  </div>
+
   <div id="jsmol-container"></div>
 
   <footer>
@@ -70,22 +88,19 @@
       height: 400,
       use: "HTML5",
       j2sPath: "https://chemapps.stolaf.edu/jmol/jsmol/j2s",
-      script: `load ${baseURL}caffeine.mol; wireframe off; spacefill 20%; spin on;`,
+      script: `load ${baseURL}caffeine.mol; wireframe off; spacefill 23%; spin on;`,
       debug: false
     };
 
     const jmolApplet = Jmol.getApplet("jsmol", Info);
 
+    document.getElementById("jsmol-container").innerHTML = Jmol.getAppletHtml(jmolApplet);
+
     document.getElementById("molSelector").addEventListener("change", function () {
       const selectedFile = this.value;
-      const loadScript = `load ${baseURL}${selectedFile}; wireframe off; spacefill 20%; spin on;`;
+      const loadScript = `load ${baseURL}${selectedFile}; wireframe off; spacefill 23%; spin on;`;
       Jmol.script(jmolApplet, loadScript);
     });
   </script>
 </body>
 </html>
-
-
-
-
-
