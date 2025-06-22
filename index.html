@@ -1,80 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JSmol Molecule Viewer</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        #molSelector {
-            margin-bottom: 20px;
-            padding: 8px;
-            font-size: 16px;
-        }
-        #appletdiv {
-            border: 1px solid #ccc;
-            width: 600px; /* Adjust as needed */
-            height: 600px; /* Adjust as needed */
-        }
-    </style>
-    <script type="text/javascript" src="https://jspaste.org/JSmol/JSmol.min.js"></script>
-    <script type="text/javascript">
-        var Jmol = {
-            'debug': false,
-            'Jmol:' : 'Jmol',
-            'console': 'jmolConsole',
-            'script': 'set default hbonds; load caffeine.mol;', // Initial molecule to load
-            'addSelectionOptions': false,
-            'allowjavascript': true
-        };
-    </script>
+  <meta charset="UTF-8">
+  <title>AAVisor Molecular JSmol</title>
+  <script type="text/javascript" src="https://chemapps.stolaf.edu/jmol/jsmol/JSmol.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    #viewer { width: 500px; height: 500px; border: 1px solid #ccc; margin-top: 20px; }
+    select { font-size: 16px; padding: 5px; }
+  </style>
 </head>
 <body>
+  <h2>Visor Molecular JSmol</h2>
+  <label for="moleculeSelect">Selecciona una molécula:</label>
+  <select id="moleculeSelect" onchange="loadMolecule()">
+    <option value="">-- Selecciona --</option>
+    <option value="https://raw.githubusercontent.com/jrdcasa/molecules/main/caffeine.mol">Caffeine (.mol)</option>
+    <option value="https://raw.githubusercontent.com/jrdcasa/molecules/main/WIKZUL01.cif">WIKZUL01 (.cif)</option>
+    <option value="https://raw.githubusercontent.com/jrdcasa/molecules/main/WIKZUL_VESTA_H1-4-7_phase1.cif">WIKZUL VESTA Phase 1 (.cif)</option>
+  </select>
 
-    <h1>JSmol Molecule Viewer</h1>
+  <div id="viewer"></div>
 
-    <div>
-        <label for="molSelector">Choose a molecule:</label>
-        <select id="molSelector">
-            <option value="caffeine.mol">Caffeine</option>
-            <option value="WIKZUL_VESTA_H1-4-7_phase1.cif">WIKZUL_VESTA_H1-4-7_phase1</option>
-            <option value="WIKZUL01.cif">Molecule WIKZUL01</option>
-        </select>
-    </div>
+  <script type="text/javascript">
+    var Info = {
+      width: 500,
+      height: 500,
+      debug: false,
+      color: "0xFFFFFF",
+      addSelectionOptions: false,
+      use: "HTML5",
+      j2sPath: "https://chemapps.stolaf.edu/jmol/jsmol/j2s",
+      script: "background white;",
+      readyFunction: null
+    };
 
-    <div id="appletdiv">
-        <script type="text/javascript">
-            // This is where the JSmol applet will be placed
-            Jmol.get
-            Jmol.setDocument(document);
-            Jmol.debugCode = Jmol.debug;
-            Jmol.debugAlert = false;
-            Jmol.set
-            new Jmol.Applet('jmolApplet', Jmol.script);
-        </script>
-    </div>
+    var jmolApplet;
 
-    <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', function() {
-            var molSelector = document.getElementById('molSelector');
+    function loadMolecule() {
+      var url = document.getElementById("moleculeSelect").value;
+      if (url) {
+        Jmol.script(jmolApplet, "load " + url);
+      }
+    }
 
-            molSelector.addEventListener('change', function() {
-                var selectedMolecule = this.value;
-                // Construct the full path to the molecule file
-                // Assuming molecule files are in the same directory as index.html
-                var moleculePath = selectedMolecule;
-
-                // Load the new molecule into the JSmol applet
-                Jmol.script(jmolApplet, 'load ' + moleculePath + ';');
-            });
-        });
-    </script>
-
+    jmolApplet = Jmol.getApplet("jmolApplet0", Info);
+    document.getElementById("viewer").innerHTML = Jmol.getAppletHtml(jmolApplet);
+  </script>
 </body>
 </html>
