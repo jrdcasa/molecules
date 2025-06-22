@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Molécula: Cafeína</title>
+  <script type="text/javascript" src="https://chemapps.stolaf.edu/jmol/jsmol/JSmol.min.js"></script>
+</head>
+<body>
+  <h2>Molécula interactiva: Cafeína</h2>
+  <div id="jsmol-container" style="width: 400px; height: 400px;"></div>
+
+  <script type="text/javascript">
+    var Info = {
+      width: 400,
+      height: 400,
+      use: "HTML5",
+      j2sPath: "https://chemapps.stolaf.edu/jmol/jsmol/j2s",
+      script: `
+        load caffeine.mol;
+        wireframe off;
+        spacefill 20%;
+        spin on;
+      `,
+      debug: false
+    };
+    Jmol.getApplet("jsmol", Info);
+  </script>
+</body>
+</html>
+
