@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,13 +20,26 @@
       margin-bottom: 20px;
     }
 
+    #main-container {
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+    }
+
     #controls {
-      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 20px;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     }
 
     #jsmol-container {
-      width: 400px;
-      height: 400px;
+      width: 500px;
+      height: 500px;
       border: 2px solid #ddd;
       border-radius: 12px;
       background-color: white;
@@ -40,7 +54,7 @@
     }
 
     select, button {
-      margin: 5px;
+      margin: 5px 0;
       padding: 8px;
       font-size: 14px;
     }
@@ -49,29 +63,34 @@
 <body>
   <h2>🧪 Interactive Molecule Viewer</h2>
 
-  <div id="controls">
-    <label for="molSelector">Choose a molecule:</label>
-    <select id="molSelector">
-      <option value="caffeine.mol">Caffeine</option>
-      <option value="WIKZUL_VESTA_H1-4-7_phase1.cif">WIKZUL_VESTA_H1-4-7_phase1</option>
-      <option value="WIKZUL01.cif">Molecule WIKZUL01</option>
-    </select>
+  <div id="main-container">
+    <div id="controls">
+      <label for="molSelector">Choose a molecule:</label>
+      <select id="molSelector">
+        <option value="caffeine.mol">Caffeine</option>
+        <option value="WIKZUL_VESTA_H1-4-7_phase1.cif">WIKZUL_VESTA_H1-4-7_phase1</option>
+        <option value="WIKZUL01.cif">Molecule WIKZUL01</option>
+      </select>
 
-    <button onclick="Jmol.script(jmolApplet, 'spacefill off')">Atoms Off</button>
-    <button onclick="Jmol.script(jmolApplet, 'spacefill 23%')">Atoms 23%</button>
-    <button onclick="Jmol.script(jmolApplet, 'spacefill 100%')">Atoms 100%</button>
+      <button onclick="Jmol.script(jmolApplet, 'spacefill off')">Atoms Off</button>
+      <button onclick="Jmol.script(jmolApplet, 'spacefill 23%')">Atoms 23%</button>
+      <button onclick="Jmol.script(jmolApplet, 'spacefill 100%')">Atoms 100%</button>
 
-    <button onclick="Jmol.script(jmolApplet, 'spin on')">Spin On</button>
-    <button onclick="Jmol.script(jmolApplet, 'spin off')">Spin Off</button>
+      <button onclick="Jmol.script(jmolApplet, 'spin on')">Spin On</button>
+      <button onclick="Jmol.script(jmolApplet, 'spin off')">Spin Off</button>
 
-    <select onchange="Jmol.script(jmolApplet, this.value)">
-      <option value="background white">White</option>
-      <option value="background skyblue" selected>Sky Blue</option>
-      <option value="background yellow">Yellow</option>
-      <option value="background salmon">Salmon</option>
-      <option value="background palegreen">Pale Green</option>
-      <option value="background black">Black</option>
-    </select>
+      <label for="bgColor">Background color:</label>
+      <select onchange="Jmol.script(jmolApplet, this.value)">
+        <option value="background white">White</option>
+        <option value="background skyblue" selected>Sky Blue</option>
+        <option value="background yellow">Yellow</option>
+        <option value="background salmon">Salmon</option>
+        <option value="background palegreen">Pale Green</option>
+        <option value="background black">Black</option>
+      </select>
+    </div>
+
+    <div id="jsmol-container"></div>
   </div>
 
   <footer>
@@ -82,8 +101,8 @@
     const baseURL = "https://jrdcasa.github.io/molecules/";
 
     const Info = {
-      width: 400,
-      height: 400,
+      width: 500,
+      height: 500,
       use: "HTML5",
       j2sPath: "https://chemapps.stolaf.edu/jmol/jsmol/j2s",
       script: `load ${baseURL}caffeine.mol; wireframe on; spacefill 23%; spin off;`,
