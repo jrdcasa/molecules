@@ -3,65 +3,83 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Interactive Molecules</title>
+  <title>Elegant Molecule Viewer</title>
   <script src="https://chemapps.stolaf.edu/jmol/jsmol/JSmol.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f2f2f2;
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #f1f8e9);
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 40px;
     }
 
-    h2 {
-      color: #333;
-      margin-bottom: 20px;
+    h1 {
+      color: #2e7d32;
+      margin-bottom: 30px;
     }
 
     #main-container {
       display: flex;
       gap: 40px;
       align-items: flex-start;
+      background: #ffffffcc;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
     }
 
     #controls {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      gap: 12px;
       padding: 20px;
-      background: #fff;
-      border: 1px solid #ddd;
+      background: #f9fbe7;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border: 1px solid #c5e1a5;
+    }
+
+    #controls label {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    #controls select, #controls button {
+      padding: 10px;
+      font-size: 14px;
+      border: none;
+      border-radius: 8px;
+      background: #aed581;
+      color: #1b5e20;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    #controls select:hover, #controls button:hover {
+      background: #9ccc65;
     }
 
     #jsmol-container {
-      width: 500px;
-      height: 500px;
-      border: 2px solid #ddd;
-      border-radius: 12px;
+      width: 520px;
+      height: 520px;
+      border-radius: 16px;
       background-color: white;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
       overflow: hidden;
     }
 
     footer {
       margin-top: 40px;
       font-size: 14px;
-      color: #777;
-    }
-
-    select, button {
-      margin: 5px 0;
-      padding: 8px;
-      font-size: 14px;
+      color: #666;
     }
   </style>
 </head>
 <body>
-  <h2>🧪 Interactive Molecule Viewer</h2>
+  <h1>🧬 Elegant Molecule Viewer</h1>
 
   <div id="main-container">
     <div id="controls">
@@ -79,8 +97,8 @@
       <button onclick="Jmol.script(jmolApplet, 'spin on')">Spin On</button>
       <button onclick="Jmol.script(jmolApplet, 'spin off')">Spin Off</button>
 
-      <label for="bgColor">Background color:</label>
-      <select onchange="Jmol.script(jmolApplet, this.value)">
+      <label for="bgSelector">Background:</label>
+      <select id="bgSelector" onchange="Jmol.script(jmolApplet, this.value)">
         <option value="background white">White</option>
         <option value="background skyblue" selected>Sky Blue</option>
         <option value="background yellow">Yellow</option>
@@ -90,22 +108,21 @@
       </select>
     </div>
 
-    <div id="jsmol-container"></div>
   </div>
 
   <footer>
-    Created using JSmol and GitHub Pages
+    Created with 💚 using JSmol and GitHub Pages
   </footer>
 
   <script>
     const baseURL = "https://jrdcasa.github.io/molecules/";
 
     const Info = {
-      width: 500,
-      height: 500,
+      width: 520,
+      height: 520,
       use: "HTML5",
       j2sPath: "https://chemapps.stolaf.edu/jmol/jsmol/j2s",
-      script: `load ${baseURL}caffeine.mol; wireframe on; spacefill 23%; spin off;`,
+      script: `load ${baseURL}caffeine.mol; wireframe off; spacefill 23%; spin off;`,
       debug: false,
       addSelectionOptions: false,
       disableJ2SLoadMonitor: true,
@@ -119,7 +136,7 @@
 
     document.getElementById("molSelector").addEventListener("change", function () {
       const selectedFile = this.value;
-      const loadScript = `load ${baseURL}${selectedFile}; wireframe on; spacefill 23%; spin off;`;
+      const loadScript = `load ${baseURL}${selectedFile}; wireframe off; spacefill 23%; spin on;`;
       Jmol.script(jmolApplet, loadScript);
     });
   </script>
