@@ -1,69 +1,99 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>JSmol Viewer Fix</title>
+  <title>Visor de Moléculas</title>
   <script src="https://chemapps.stolaf.edu/jmol/jsmol/JSmol.min.js"></script>
   <style>
     body {
-      margin: 0;
       font-family: sans-serif;
       background: #f0f0f0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       padding: 20px;
+      margin: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2e7d32;
     }
 
     #main-container {
       display: flex;
+      flex-direction: row;
+      justify-content: center;
       gap: 20px;
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-top: 20px;
     }
 
     #controls {
       display: flex;
       flex-direction: column;
       gap: 10px;
+      background: #ffffff;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    #controls select, #controls button {
+      padding: 8px;
+      font-size: 14px;
+      border-radius: 4px;
+      border: 1px solid #999;
     }
 
     #jsmol-container {
       width: 520px;
       height: 520px;
-      background-color: #fff;
+      background: white;
       border: 1px solid #ccc;
       border-radius: 8px;
       overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
-    #jsmol-applet {
-      width: 100%;
-      height: 100%;
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      color: #666;
     }
   </style>
 </head>
 <body>
-  <h1>XXXXJSmol Viewer Test</h1>
+  <h1>🧬 Visor de Moléculas</h1>
+
   <div id="main-container">
     <div id="controls">
+      <label for="molSelector">Selecciona una molécula:</label>
       <select id="molSelector">
         <option value="caffeine.mol">Caffeine</option>
+        <option value="WIKZUL_VESTA_H1-4-7_phase1.cif">WIKZUL_VESTA_H1-4-7_phase1</option>
+        <option value="WIKZUL01.cif">WIKZUL01</option>
       </select>
-      <button onclick="Jmol.script(jmolApplet, 'spacefill off')">Atoms Off</button>
-      <button onclick="Jmol.script(jmolApplet, 'spacefill 23%')">Atoms 23%</button>
-      <button onclick="Jmol.script(jmolApplet, 'spacefill 100%')">Atoms 100%</button>
+
+      <button onclick="Jmol.script(jmolApplet, 'spacefill off')">Átomos Off</button>
+      <button onclick="Jmol.script(jmolApplet, 'spacefill 23%')">Átomos 23%</button>
+      <button onclick="Jmol.script(jmolApplet, 'spacefill 100%')">Átomos 100%</button>
+
+      <button onclick="Jmol.script(jmolApplet, 'spin on')">Giro On</button>
+      <button onclick="Jmol.script(jmolApplet, 'spin off')">Giro Off</button>
+
+      <label for="bgSelector">Fondo:</label>
+      <select id="bgSelector" onchange="Jmol.script(jmolApplet, this.value)">
+        <option value="background white">Blanco</option>
+        <option value="background skyblue" selected>Celeste</option>
+        <option value="background yellow">Amarillo</option>
+        <option value="background salmon">Salmón</option>
+        <option value="background palegreen">Verde Claro</option>
+        <option value="background black">Negro</option>
+      </select>
     </div>
-    <div id="jsmol-container">
-      <div id="jsmol-applet"></div>
-    </div>
+
+    <div id="jsmol-container"></div>
   </div>
+
+  <footer>
+    Creado con 💚 usando JSmol
+  </footer>
 
   <script>
     const baseURL = "https://jrdcasa.github.io/molecules/";
@@ -82,7 +112,7 @@
 
     const jmolApplet = Jmol.getApplet("jsmol", Info);
     Jmol.setDocument(false);
-    Jmol.setAppletHtml("jsmol-applet", jmolApplet);
+    Jmol.setAppletHtml("jsmol-container", jmolApplet);
 
     document.getElementById("molSelector").addEventListener("change", function () {
       const selectedFile = this.value;
