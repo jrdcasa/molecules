@@ -45,6 +45,150 @@
 			</h3>
 		</header>
 	</div>
+
+			<div id="main">
+				<div id="JmolOuterDiv">
+						<script type="text/javascript">
+							Jmol.jmolButton(myJmol, reset, "Reset to original orientation");						
+						</script>
+						<span></span>
+						<script type="text/javascript">
+							Jmol.jmolButton(myJmol, "draw DELETE", "Delete all symmetry elements");
+						</script>
+						<br>
+						<script type="text/javascript">
+							Jmol.jmolCheckbox(myJmol, "axes MOLECULAR; axes ON", "axes OFF", "Turn on/off displayed axes | ");
+							Jmol.jmolCheckbox(myJmol, 'select hydrogen; set labelAlignment CENTER ; color label "#17202A"; font label 18 bold; label "%a";', "select *; label off", "Atom labels on/off | ");
+						</script>
+						<br>
+						<script type="text/javascript">
+							Jmol.jmolCheckbox(myJmol, "background white", "background black", "White/Black background | ");
+							//Jmol.jmolCheckbox(myJmol, "frame 1.0; color @@1 yellow; color @@2 red; color @@3 green; color @@4 blue; frame 1.1", "frame 1.0; color @@1 white;  color @@2 white; color @@3 white; color @@4 white; frame 1.1; ", "Hydrogrens Color    <br>");
+							Jmol.jmolCheckbox(myJmol, changeatomcolor, originalatomcolor, "Hydrogrens Color    <br>");
+						</script>
+						<script type="text/javascript">
+							Jmol.jmolRadioGroup(myJmol, repr, "", "atomstyle");
+			    		</script>
+						<br>
+
+					<label for="combobox_td"></label>
+					<select id="combobox_td">
+						<option value="select">Choose an option...</option>
+						<option value="propers" >Proper axes</option>
+						<option value="planes">Symmetry planes</option>
+						<option value="impropers">Improper axes</option>
+					</select>
+
+					<div id="propers" class="data">
+						<h2>C3 SYMMETRY AXIS</h2>
+						<script type="text/javascript">
+						Jmol.jmolCheckbox(myJmol, draw_all_c3, delete_all_c3, "Show all C3 proper axes<br>");
+						</script>
+						<script type="text/javascript">
+							Jmol.jmolRadio(myJmol, draw_c3_1, "Show C3 axis 1          ", false, "<span></span>","c3radio", "c3radio_0");
+							Jmol.jmolButton(myJmol, apply_c3_1, "C3_1 rotate");
+							Jmol.jmolRadio(myJmol, draw_c3_2, "Show C3 axis 2          ", false, "<span></span>","c3radio", "c3radio_1");
+							Jmol.jmolButton(myJmol, apply_c3_2, "C3_2 rotate");
+						</script>
+						<br>
+						<script type="text/javascript">
+							Jmol.jmolRadio(myJmol, draw_c3_3, "Show C3 axis 3          ", false, "<span></span>","c3radio", "c3radio_2");
+							Jmol.jmolButton(myJmol, apply_c3_3, "C3_3 rotate");
+							Jmol.jmolRadio(myJmol, draw_c3_4, "Show C3 axis 4          ", false, "<span></span>","c3radio", "c3radio_3");
+							Jmol.jmolButton(myJmol, apply_c3_4, "C3_4 rotate");
+						</script>
+						<br>
+						<h2>C2 SYMMETRY AXIS</h2>
+						<script type="text/javascript">
+	                       Jmol.jmolCheckbox(myJmol, draw_all_c2, delete_all_c2, "Show all C2 proper axes");               
+						</script>
+						<br>
+						<script type="text/javascript">
+							Jmol.jmolRadio(myJmol, draw_c2_1, "Show C2 axis 1          ", false, "<span></span>", "c2radio", "c2radio_0");
+						    Jmol.jmolButton(myJmol, apply_c2_1, "C2_1 proper");
+						</script>
+						<br>
+						<script type="text/javascript">
+							Jmol.jmolRadio(myJmol, draw_c2_2, "Show C2 axis 2          ", false, "<span></span>", "c2radio", "c2radio_1");
+						    Jmol.jmolButton(myJmol, apply_c2_2, "C2_2 proper");
+						</script>
+						<br>
+						<script type="text/javascript">
+							Jmol.jmolRadio(myJmol, draw_c2_3, "Show C2 axis 3          ", false, "<span></span>", "c2radio", "c2radio_2");
+						    Jmol.jmolButton(myJmol, apply_c2_3, "C2_3 proper");
+						</script>
+					</div>
+
+					<div id="impropers" class="data">
+						<h2>S4 SYMMETRY AXIS</h2>
+						<script type="text/javascript">
+							Jmol.jmolCheckbox(myJmol, draw_all_s4, delete_all_s4, "Show all S4 improper axes");               
+						</script>
+						<br>
+						<script type="text/javascript">
+							Jmol.jmolRadio(myJmol, draw_s4_1, "Show S4 axis 1          ", false, "<span></span>", "s4radio", "s4radio_0");
+							apply_s4_1=apply_s4_td("H1","H2","H3","H4","C5", 1)
+							Jmol.jmolButton(myJmol, apply_s4_1, "S4 1 improper");
+						</script>
+						<br>
+						<script type="text/javascript">
+							Jmol.jmolRadio(myJmol, draw_s4_2, "Show S4 axis 2          ", false, "<span></span>", "s4radio", "s4radio_1");
+							apply_s4_2=apply_s4_td("H1","H3","H2","H4","C5", 2)
+							Jmol.jmolButton(myJmol, apply_s4_2, "S4 2 improper");
+						</script>
+						<br>
+						<script type="text/javascript">
+							Jmol.jmolRadio(myJmol, draw_s4_3, "Show S4 axis 3          ", false, "<span></span>", "s4radio", "s4radio_2");
+							apply_s4_3=apply_s4_td("H1","H4","H2","H3","C5", 3)
+							Jmol.jmolButton(myJmol, apply_s4_3, "S4 3 improper");
+						</script>
+
+					</div>
+					<div id="planes" class="data">
+						<h2 class="h2plane">  &sigma;<sub>D</sub> SYMMETRY PLANE</h2>
+						<script type="text/javascript">
+							draw_all_sd = draw_all_sd()
+							Jmol.jmolCheckbox(myJmol, draw_all_sd, delete_all_sd, "Show all symmetry planes");               
+						</script>
+						<br>
+						<script type="text/javascript">
+                            draw_sd_1=draw_sd("H3", "C5", "H4")
+							Jmol.jmolRadio(myJmol, draw_sd_1, "Show &sigma;<sub>D</sub>  plane 1           ", false, "<span></span>", "sdradio", "sdradio_1");
+							apply_sd_1=angle_atoms("H3", "C5", "H4");
+							Jmol.jmolButton(myJmol, apply_sd_1, "Apply plane 1");
+                            draw_sd_2=draw_sd("H2", "C5", "H4")
+							Jmol.jmolRadio(myJmol, draw_sd_2, "Show &sigma;<sub>D</sub>  plane 2          ", false, "<span></span>", "sdradio", "sdradio_3");
+							apply_sd_2=angle_atoms("H2", "C5", "H4");
+							Jmol.jmolButton(myJmol, apply_sd_2, "Apply plane 2");
+						</script>
+						<br>
+						<script type="text/javascript">
+                            draw_sd_3=draw_sd("H2", "C5", "H3")
+							Jmol.jmolRadio(myJmol, draw_sd_3, "Show &sigma;<sub>D</sub>  plane 3          ", false, "<span></span>", "sdradio", "sdradio_5");
+							apply_sd_3=angle_atoms("H2", "C5", "H3");
+							Jmol.jmolButton(myJmol, apply_sd_3, "Apply plane 3");
+                            draw_sd_4=draw_sd("H1", "C5", "H4")
+							Jmol.jmolRadio(myJmol, draw_sd_4, "Show &sigma;<sub>D</sub>  plane 4          ", false, "<span></span>", "sdradio", "sdradio_4");
+                            apply_sd_4=angle_atoms("H1", "C5", "H4");
+							Jmol.jmolButton(myJmol, apply_sd_4, "Apply plane 4");
+
+						</script>
+						<br>
+						<script type="text/javascript">
+                            draw_sd_5=draw_sd("H1", "C5", "H3")
+							Jmol.jmolRadio(myJmol, draw_sd_5, "Show &sigma;<sub>D</sub>  plane 5           ", false, "<span></span>", "sdradio", "sdradio_2");
+                            apply_sd_5=angle_atoms("H1", "C5", "H3");
+							Jmol.jmolButton(myJmol, apply_sd_5, "Apply plane 5");
+                            draw_sd_6=draw_sd("H1", "C5", "H2")
+							Jmol.jmolRadio(myJmol, draw_sd_6, "Show &sigma;<sub>D</sub>  plane 6           ", false, "<span></span>", "sdradio", "sdradio_0");
+                            apply_sd_6=angle_atoms("H1", "C5", "H2");
+							Jmol.jmolButton(myJmol, apply_sd_6, "Apply plane 6");
+						</script>
+					</div>
+				</div>
+			</div>
+		</div>	    
+
     </body>
 
 </html>
