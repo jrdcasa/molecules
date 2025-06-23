@@ -78,7 +78,7 @@
   </style>
 </head>
 <body>
-  <h1>🧬 VVVVElegant Molecule Viewer</h1>
+  <h1>🧬 CCCCElegant Molecule Viewer</h1>
 
   <div id="main-container">
     <div id="controls">
@@ -131,7 +131,7 @@
     };
 
     const jmolApplet = Jmol.getApplet("jsmol", Info);
- 
+    Jmol.setDocument(false);
     document.getElementById("jsmol-container").innerHTML = Jmol.getAppletHtml(applet);
 
     
