@@ -1,5 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+    <script>
+    const baseURL = "https://jrdcasa.github.io/molecules/";
+
+    const Info = {
+      width: 520,
+      height: 520,
+      use: "HTML5",
+      j2sPath: "https://chemapps.stolaf.edu/jmol/jsmol/j2s",
+      script: `load ${baseURL}caffeine.mol; wireframe off; spacefill 23%; spin off;`,
+      debug: false,
+      addSelectionOptions: false,
+      disableJ2SLoadMonitor: true,
+      disableInitialConsole: true
+    };
+
+    const jmolApplet = Jmol.getApplet("jsmol", Info);
+    Jmol.setDocument(false);
+    Jmol.setAppletHtml("jsmol-container", jmolApplet);
+
+    document.getElementById("molSelector").addEventListener("change", function () {
+      const selectedFile = this.value;
+      const loadScript = `load ${baseURL}${selectedFile}; wireframe off; spacefill 23%; spin on;`;
+      Jmol.script(jmolApplet, loadScript);
+    });
+  </script>
 <head>
   <meta charset="UTF-8">
   <title>Visor de Moléculas</title>
