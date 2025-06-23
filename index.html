@@ -1,41 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
-    <script>
-    const baseURL = "https://jrdcasa.github.io/molecules/";
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+	<head>
+		<title>Molecular Viewer</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main-lateral.css" />
+		<script src="jmol/JSmol.min.js" type="text/javascript"></script>
+		<script src="demos.js" type="text/javascript"></script>
+		<script src="common.js" type="text/javascript"></script>
+		<script src="td_methane.js" type="text/javascript"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<script type="text/javascript">
+            const baseURL = "https://jrdcasa.github.io/molecules/";
+			$(document).ready(function(){
+    			Jmol.script(myJmol, 'load https://jrdcasa.github.io/molecules/caffeine.mol; moveto 0 AXIS x;');
+    			$('#jmolButton0').click(unchecked_jmolCheckbox);
+    			$('#jmolButton1').click(unchecked_jmolCheckbox);
+				$("#combobox_td").on('change', function() {
+					//alert($(this).val());
+					$(".data").hide();
+					$("#" + $(this).val()).fadeIn(700);
+				});
+			});
+			$(window).on("load", function() {
+				document.getElementById("combobox_td").selectedIndex = "0";
+			});
+	   		function goToNewPage()
+    		{
+        		var url = "https://youtu.be/P4cvjyKQ0_4";
+        		if(url != 'none') {
+					window.open(url, '_blank');
+        		}
+      		};
+		</script>        
+    </head>
 
-    const Info = {
-      width: 520,
-      height: 520,
-      use: "HTML5",
-      j2sPath: "https://chemapps.stolaf.edu/jmol/jsmol/j2s",
-      script: `load ${baseURL}caffeine.mol; wireframe off; spacefill 23%; spin off;`,
-      debug: false,
-      addSelectionOptions: false,
-      disableJ2SLoadMonitor: true,
-      disableInitialConsole: true
-    };
-
-    const jmolApplet = Jmol.getApplet("jsmol", Info);
-    Jmol.setDocument(false);
-    Jmol.setAppletHtml("jsmol-container", jmolApplet);
-
-    document.getElementById("molSelector").addEventListener("change", function () {
-      const selectedFile = this.value;
-      const loadScript = `load ${baseURL}${selectedFile}; wireframe off; spacefill 23%; spin on;`;
-      Jmol.script(jmolApplet, loadScript);
-    });
-  </script>
-<head>
-  <meta charset="UTF-8">
-  <title>Visor de Moléculas</title>
-</head>
-<body>
-  <h1>🧬 Visor de Moléculas</h1>
-
-  <footer>
-    Creado con 💚 usando JSmol
-  </footer>
-
-
-</body>
 </html>
