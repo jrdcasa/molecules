@@ -89,7 +89,8 @@
       </select>
     </div>
 
-    <div id="jsmol-container"></div>
+  <div id="jsmol-container"></div>
+    <div id="jsmol-applet"></div> 
   </div>
 
   <footer>
@@ -113,7 +114,7 @@
 
     const jmolApplet = Jmol.getApplet("jsmol", Info);
     Jmol.setDocument(false);
-    Jmol.setAppletHtml("jsmol-container", jmolApplet);
+    Jmol.setAppletHtml("jsmol-applet", jmolApplet);
 
     document.getElementById("molSelector").addEventListener("change", function () {
       const selectedFile = this.value;
