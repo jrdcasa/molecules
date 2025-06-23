@@ -62,8 +62,8 @@
     }
 
     #jsmol-container {
-      width: 1520px;
-      height: 1520px;
+      width: 520px;
+      height: 520px;
       border-radius: 16px;
       background-color: white;
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
@@ -78,7 +78,7 @@
   </style>
 </head>
 <body>
-  <h1>🧬 AAAElegant Molecule Viewer</h1>
+  <h1>🧬 VVVVElegant Molecule Viewer</h1>
 
   <div id="main-container">
     <div id="controls">
@@ -122,7 +122,7 @@
       height: 520,
       use: "HTML5",
       j2sPath: "https://chemapps.stolaf.edu/jmol/jsmol/j2s",
-      script: `load ${baseURL}caffeine.mol; wireframe off; spacefill 23%; spin off;`,
+      script: `load ${baseURL}caffeine.mol; wireframe on; spacefill 23%; spin off;`,
       debug: false,
       addSelectionOptions: false,
       disableJ2SLoadMonitor: true,
