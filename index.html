@@ -127,13 +127,14 @@
       addSelectionOptions: false,
       disableJ2SLoadMonitor: true,
       disableInitialConsole: true,
-      readyFunction: function(applet) {
-        document.getElementById("jsmol-container").innerHTML = Jmol.getAppletHtml(applet);
-      }
+
     };
 
     const jmolApplet = Jmol.getApplet("jsmol", Info);
+ 
+    document.getElementById("jsmol-container").innerHTML = Jmol.getAppletHtml(applet);
 
+    
     document.getElementById("molSelector").addEventListener("change", function () {
       const selectedFile = this.value;
       const loadScript = `load ${baseURL}${selectedFile}; wireframe off; spacefill 23%; spin on;`;
