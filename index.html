@@ -1,52 +1,144 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>PPVisor Molecular JSmol</title>
-  <script type="text/javascript" src="https://chemapps.stolaf.edu/jmol/jsmol/JSmol.min.js"></script>
+  <title>Elegant Molecule Viewer</title>
+  <script src="https://chemapps.stolaf.edu/jmol/jsmol/JSmol.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    #viewer { width: 500px; height: 500px; border: 1px solid #ccc; margin-top: 20px; }
-    select { font-size: 16px; padding: 5px; }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #f1f8e9);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px;
+    }
+
+    h1 {
+      color: #2e7d32;
+      margin-bottom: 30px;
+    }
+
+    #main-container {
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+      background: #ffffffcc;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    #controls {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 20px;
+      background: #f9fbe7;
+      border-radius: 12px;
+      border: 1px solid #c5e1a5;
+    }
+
+    #controls label {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    #controls select, #controls button {
+      padding: 10px;
+      font-size: 14px;
+      border: none;
+      border-radius: 8px;
+      background: #aed581;
+      color: #1b5e20;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    #controls select:hover, #controls button:hover {
+      background: #9ccc65;
+    }
+
+    #jsmol-container {
+      width: 520px;
+      height: 520px;
+      border-radius: 16px;
+      background-color: white;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 14px;
+      color: #666;
+    }
   </style>
 </head>
 <body>
-  <h2>PPVisor Molecular JSmol</h2>
-  <label for="moleculeSelect">Selecciona una molécula:</label>
-  <select id="moleculeSelect" onchange="loadMolecule()">
-    <option value="">-- Selecciona --</option>
-    <option value="https://raw.githubusercontent.com/jrdcasa/molecules/main/caffeine.mol">Caffeine (.mol)</option>
-    <option value="https://raw.githubusercontent.com/jrdcasa/molecules/main/WIKZUL01.cif">WIKZUL01 (.cif)</option>
-    <option value="https://raw.githubusercontent.com/jrdcasa/molecules/main/WIKZUL_VESTA_H1-4-7_phase1.cif">WIKZUL VESTA Phase 1 (.cif)</option>
-  </select>
+  <h1>🧬 AAAElegant Molecule Viewer</h1>
 
-  <div id="viewer"></div>
+  <div id="main-container">
+    <div id="controls">
+      <label for="molSelector">Choose a molecule:</label>
+      <select id="molSelector">
+        <option value="caffeine.mol">Caffeine</option>
+        <option value="WIKZUL_VESTA_H1-4-7_phase1.cif">WIKZUL_VESTA_H1-4-7_phase1</option>
+        <option value="WIKZUL01.cif">Molecule WIKZUL01</option>
+      </select>
 
-  <script type="text/javascript">
-    var Info = {
-      width: 500,
-      height: 500,
-      debug: false,
-      color: "0xFFFFFF",
-      addSelectionOptions: false,
-      use: "HTML5", // Asegura que se use solo HTML5
+      <button onclick="Jmol.script(jmolApplet, 'spacefill off')">Atoms Off</button>
+      <button onclick="Jmol.script(jmolApplet, 'spacefill 23%')">Atoms 23%</button>
+      <button onclick="Jmol.script(jmolApplet, 'spacefill 100%')">Atoms 100%</button>
+
+      <button onclick="Jmol.script(jmolApplet, 'spin on')">Spin On</button>
+      <button onclick="Jmol.script(jmolApplet, 'spin off')">Spin Off</button>
+
+      <label for="bgSelector">Background:</label>
+      <select id="bgSelector" onchange="Jmol.script(jmolApplet, this.value)">
+        <option value="background white">White</option>
+        <option value="background skyblue" selected>Sky Blue</option>
+        <option value="background yellow">Yellow</option>
+        <option value="background salmon">Salmon</option>
+        <option value="background palegreen">Pale Green</option>
+        <option value="background black">Black</option>
+      </select>
+    </div>
+
+    <div id="jsmol-container"></div>
+  </div>
+
+  <footer>
+    Created with 💚 using JSmol and GitHub Pages
+  </footer>
+
+  <script>
+    const baseURL = "https://jrdcasa.github.io/molecules/";
+
+    const Info = {
+      width: 520,
+      height: 520,
+      use: "HTML5",
       j2sPath: "https://chemapps.stolaf.edu/jmol/jsmol/j2s",
-      script: "background white;",
+      script: `load ${baseURL}caffeine.mol; wireframe off; spacefill 23%; spin off;`,
+      debug: false,
+      addSelectionOptions: false,
       disableJ2SLoadMonitor: true,
-      disableInitialConsole: true
+      disableInitialConsole: true,
+      readyFunction: function(applet) {
+        document.getElementById("jsmol-container").innerHTML = Jmol.getAppletHtml(applet);
+      }
     };
 
-    var jmolApplet;
+    const jmolApplet = Jmol.getApplet("jsmol", Info);
 
-    function loadMolecule() {
-      var url = document.getElementById("moleculeSelect").value;
-      if (url) {
-        Jmol.script(jmolApplet, "load \"" + url + "\";");
-      }
-    }
-
-    jmolApplet = Jmol.getApplet("jmolApplet0", Info);
-    document.getElementById("viewer").innerHTML = Jmol.getAppletHtml(jmolApplet);
+    document.getElementById("molSelector").addEventListener("change", function () {
+      const selectedFile = this.value;
+      const loadScript = `load ${baseURL}${selectedFile}; wireframe off; spacefill 23%; spin on;`;
+      Jmol.script(jmolApplet, loadScript);
+    });
   </script>
 </body>
 </html>
